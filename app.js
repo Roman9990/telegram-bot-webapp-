@@ -1,797 +1,190 @@
-// 🔥 ULTRA CYBER ADMIN SELECTOR - MIND-BLOWING JAVASCRIPT 🔥
-
-// ADMIN DATA MATRIX
-const CYBER_ADMINS = [
-    {
-        id: 5518423575,
-        tag: "roman",
-        role: "Владелец",
-        status: "active",
-        avatar: "👑",
-        rating: 5.0,
-        efficiency: 95,
-        dialogs: 156,
-        resolved: 148,
-        response_time: "2 мин",
-        power_level: 9500,
-        cyber_rank: "LEGEND"
-    },
-    {
-        id: 123456789,
-        tag: "мукра_адская",
-        role: "Администратор", 
-        status: "active",
-        avatar: "🛡️",
-        rating: 4.8,
-        efficiency: 89,
-        dialogs: 234,
-        resolved: 198,
-        response_time: "3 мин",
-        power_level: 8200,
-        cyber_rank: "ELITE"
-    },
-    {
-        id: 987654321,
-        tag: "support",
-        role: "Техподдержка",
-        status: "inactive",
-        avatar: "🎧",
-        rating: 4.2,
-        efficiency: 76,
-        dialogs: 89,
-        resolved: 67,
-        response_time: "8 мин",
-        power_level: 6700,
-        cyber_rank: "PRO"
-    },
-    {
-        id: 555666777,
-        tag: "moderator_1",
-        role: "Модератор",
-        status: "active",
-        avatar: "⚖️",
-        rating: 4.6,
-        efficiency: 82,
-        dialogs: 145,
-        resolved: 119,
-        response_time: "5 мин",
-        power_level: 7400,
-        cyber_rank: "EXPERT"
-    },
-    {
-        id: 444333222,
-        tag: "helper",
-        role: "Помощник",
-        status: "busy",
-        avatar: "🤝",
-        rating: 4.1,
-        efficiency: 71,
-        dialogs: 67,
-        resolved: 48,
-        response_time: "12 мин",
-        power_level: 5300,
-        cyber_rank: "ADVANCED"
-    }
-];
-
-// ULTRA CYBER APPLICATION CLASS
-class UltraCyberApp {
+// ✨ КРАСИВЫЙ СЕЛЕКТОР АДМИНИСТРАТОРОВ ✨
+class BeautifulAdminSelector {
     constructor() {
+        this.admins = [
+            {
+                id: 5518423575,
+                tag: "roman",
+                role: "Владелец",
+                status: "active",
+                avatar: "👑",
+                rating: 5.0,
+                dialogs: 156,
+                resolved: 148,
+                response_time: "2 мин",
+                efficiency: 95,
+                specialties: ["VIP поддержка", "Критические вопросы"],
+                experience: "2+ года"
+            },
+            {
+                id: 123456789,
+                tag: "мукра_адская",
+                role: "Администратор",
+                status: "active",
+                avatar: "🛡️",
+                rating: 4.8,
+                dialogs: 234,
+                resolved: 198,
+                response_time: "3 мин",
+                efficiency: 89,
+                specialties: ["Модерация", "Конфликты"],
+                experience: "1.5 года"
+            },
+            {
+                id: 987654321,
+                tag: "support",
+                role: "Техподдержка",
+                status: "inactive",
+                avatar: "🎧",
+                rating: 4.2,
+                dialogs: 89,
+                resolved: 67,
+                response_time: "8 мин",
+                efficiency: 76,
+                specialties: ["Технические вопросы", "Баги"],
+                experience: "1 год"
+            },
+            {
+                id: 555666777,
+                tag: "moderator_1",
+                role: "Модератор",
+                status: "active",
+                avatar: "⚖️",
+                rating: 4.6,
+                dialogs: 145,
+                resolved: 119,
+                response_time: "5 мин",
+                efficiency: 82,
+                specialties: ["Жалобы", "Спам"],
+                experience: "8 месяцев"
+            },
+            {
+                id: 444333222,
+                tag: "helper",
+                role: "Помощник",
+                status: "busy",
+                avatar: "🤝",
+                rating: 4.1,
+                dialogs: 67,
+                resolved: 48,
+                response_time: "12 мин",
+                efficiency: 71,
+                specialties: ["Новички", "Базовые вопросы"],
+                experience: "3 месяца"
+            }
+        ];
+
+        this.filteredAdmins = [...this.admins];
         this.selectedAdmin = null;
-        this.filteredAdmins = [...CYBER_ADMINS];
-        this.isLoading = true;
-        this.matrixRain = null;
-        this.cursorTrail = [];
-        this.particles = [];
         this.tg = null;
 
         this.init();
     }
 
-    async init() {
-        console.log("🚀 ИНИЦИАЛИЗАЦИЯ УЛЬТРА КИБЕР СИСТЕМЫ...");
+    init() {
+        console.log('✨ Инициализация красивого селектора...');
 
-        this.initCursor();
-        this.initMatrixRain();
         this.initTelegram();
-        this.showLoadingPortal();
-
-        // EPIC LOADING SEQUENCE
-        await this.sleep(5000);
-
-        this.hideLoadingPortal();
-        this.initApp();
+        this.createParticles();
         this.bindEvents();
+        this.animateStats();
         this.renderAdmins();
 
-        console.log("✅ КИБЕР СИСТЕМА АКТИВНА!");
-    }
-
-    // === LOADING PORTAL ===
-    showLoadingPortal() {
-        const portal = document.getElementById('loadingPortal');
-        if (portal) {
-            portal.style.display = 'flex';
-        }
-    }
-
-    hideLoadingPortal() {
-        const portal = document.getElementById('loadingPortal');
-        const app = document.getElementById('cyberApp');
-
-        if (portal) {
-            portal.classList.add('fade-out');
-            setTimeout(() => {
-                portal.style.display = 'none';
-            }, 2000);
-        }
-
-        if (app) {
-            setTimeout(() => {
-                app.classList.add('active');
-            }, 1000);
-        }
-    }
-
-    // === MATRIX RAIN EFFECT ===
-    initMatrixRain() {
-        const canvas = document.getElementById('matrixCanvas');
-        if (!canvas) return;
-
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
-        const drops = [];
-        const columns = Math.floor(canvas.width / 15);
-
-        for (let i = 0; i < columns; i++) {
-            drops[i] = Math.random() * canvas.height;
-        }
-
-        const drawMatrix = () => {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.font = '12px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const char = chars[Math.floor(Math.random() * chars.length)];
-
-                // Gradient effect
-                const gradient = ctx.createLinearGradient(0, drops[i] - 50, 0, drops[i]);
-                gradient.addColorStop(0, 'rgba(0, 255, 255, 0)');
-                gradient.addColorStop(0.5, 'rgba(0, 255, 255, 0.8)');
-                gradient.addColorStop(1, 'rgba(0, 255, 255, 1)');
-
-                ctx.fillStyle = gradient;
-                ctx.fillText(char, i * 15, drops[i]);
-
-                if (drops[i] > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i] += 1;
-            }
-
-            requestAnimationFrame(drawMatrix);
-        };
-
-        drawMatrix();
-
-        // Resize handler
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    }
-
-    // === CUSTOM CURSOR ===
-    initCursor() {
-        const cursor = document.createElement('div');
-        cursor.className = 'cursor';
-        cursor.id = 'cursor';
-        document.body.appendChild(cursor);
-
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-
-            // Add trail effect
-            this.createCursorTrail(mouseX, mouseY);
-        });
-
-        // Smooth cursor follow
-        const animateCursor = () => {
-            cursorX += (mouseX - cursorX) * 0.1;
-            cursorY += (mouseY - cursorY) * 0.1;
-
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-
-            requestAnimationFrame(animateCursor);
-        };
-        animateCursor();
-    }
-
-    createCursorTrail(x, y) {
-        const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
-        trail.style.left = x + 'px';
-        trail.style.top = y + 'px';
-        document.body.appendChild(trail);
-
         setTimeout(() => {
-            trail.style.opacity = '0';
-            trail.style.transform = 'scale(0)';
-        }, 50);
+            document.getElementById('app').style.opacity = '1';
+        }, 100);
 
-        setTimeout(() => trail.remove(), 500);
+        console.log('🎉 Красивый селектор готов!');
     }
 
-    // === TELEGRAM INTEGRATION ===
     initTelegram() {
         if (window.Telegram && window.Telegram.WebApp) {
             this.tg = window.Telegram.WebApp;
             this.tg.ready();
             this.tg.expand();
-            console.log("📱 Telegram WebApp подключен!");
+            this.tg.setBackgroundColor('#667eea');
+            console.log('📱 Telegram WebApp подключен');
         }
     }
 
-    // === APP INITIALIZATION ===
-    initApp() {
-        this.isLoading = false;
-        this.animateStatsCounters();
+    createParticles() {
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 30;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.opacity = Math.random() * 0.5 + 0.2;
+            particlesContainer.appendChild(particle);
+        }
     }
 
-    // === EVENT BINDING ===
     bindEvents() {
-        // Search input
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                this.handleSearch(e.target.value);
-            });
-
-            searchInput.addEventListener('focus', () => {
-                this.createRippleEffect(searchInput);
-            });
+            searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
         }
 
-        // Selection buttons
-        const cancelBtn = document.getElementById('cancelBtn');
-        const confirmBtn = document.getElementById('confirmBtn');
+        // Ripple effect для всех кликабельных элементов
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.admin-card, .btn, .select-button')) {
+                this.createRipple(e);
+            }
+        });
 
-        if (cancelBtn) {
-            cancelBtn.addEventListener('click', () => {
-                this.cancelSelection();
-            });
-        }
-
-        if (confirmBtn) {
-            confirmBtn.addEventListener('click', () => {
-                this.confirmSelection();
-            });
-        }
-
-        // Keyboard shortcuts
+        // Закрытие модального окна по ESC
         document.addEventListener('keydown', (e) => {
-            this.handleKeyboard(e);
+            if (e.key === 'Escape') {
+                this.closeModal();
+            }
         });
 
-        // Stats orb interactions
-        document.querySelectorAll('.stat-orb').forEach(orb => {
-            orb.addEventListener('click', () => {
-                this.createOrbExplosion(orb);
-            });
-        });
-    }
-
-    // === ADMIN RENDERING ===
-    renderAdmins() {
-        const container = document.getElementById('matrixGrid');
-        if (!container) return;
-
-        container.innerHTML = '';
-
-        this.filteredAdmins.forEach((admin, index) => {
-            const card = this.createAdminCard(admin, index);
-            container.appendChild(card);
-
-            // Staggered entrance animation
-            setTimeout(() => {
-                card.classList.add('visible');
-            }, index * 200);
+        // Закрытие модального окна по клику вне его
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') {
+                this.closeModal();
+            }
         });
     }
 
-    createAdminCard(admin, index) {
-        const card = document.createElement('div');
-        card.className = 'admin-card';
-        card.dataset.adminId = admin.id;
+    createRipple(event) {
+        const button = event.currentTarget;
+        const rect = button.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = event.clientX - rect.left - size / 2;
+        const y = event.clientY - rect.top - size / 2;
 
-        const statusClass = admin.status === 'active' ? 'active' : 
-                           admin.status === 'busy' ? 'busy' : 'inactive';
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
 
-        const statusText = admin.status === 'active' ? 'АКТИВЕН' :
-                          admin.status === 'busy' ? 'ЗАНЯТ' : 'ОФФЛАЙН';
+        button.appendChild(ripple);
 
-        card.innerHTML = `
-            <div class="card-header">
-                <div class="admin-avatar">${admin.avatar}</div>
-                <div class="admin-info">
-                    <div class="admin-tag">#${admin.tag}</div>
-                    <div class="admin-role">${admin.role}</div>
-                    <div class="admin-rank">${admin.cyber_rank}</div>
-                </div>
-            </div>
-
-            <div class="power-meter">
-                <div class="power-value">${admin.power_level.toLocaleString()}</div>
-                <div class="power-label">УРОВЕНЬ МОЩНОСТИ</div>
-            </div>
-
-            <div class="status-display">
-                <div class="status-dot ${statusClass}"></div>
-                <div class="status-text">${statusText}</div>
-            </div>
-
-            <div class="performance-stats">
-                <div class="stat-item">
-                    <div class="stat-value">${admin.dialogs}</div>
-                    <div class="stat-label">Диалогов</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">${admin.resolved}</div>
-                    <div class="stat-label">Решено</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">${admin.efficiency}%</div>
-                    <div class="stat-label">Эффективность</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">${admin.response_time}</div>
-                    <div class="stat-label">Ответ</div>
-                </div>
-            </div>
-
-            <div class="badges-container">
-                <div class="badge">${admin.cyber_rank}</div>
-                <div class="badge">⭐ ${admin.rating}</div>
-            </div>
-        `;
-
-        // Click handler
-        card.addEventListener('click', () => {
-            this.selectAdmin(admin, card);
-        });
-
-        // Hover effects
-        card.addEventListener('mouseenter', () => {
-            this.createHoverEffect(card);
-        });
-
-        return card;
-    }
-
-    // === ADMIN SELECTION ===
-    selectAdmin(admin, cardElement) {
-        // Clear previous selection
-        document.querySelectorAll('.admin-card.selected').forEach(card => {
-            card.classList.remove('selected');
-        });
-
-        // Select new admin
-        cardElement.classList.add('selected');
-        this.selectedAdmin = admin;
-
-        // Show selection vortex
-        this.showSelectionVortex();
-
-        // Epic effects
-        this.createParticleExplosion(cardElement);
-        this.createScreenShake();
-
-        console.log(`⚡ АДМИНИСТРАТОР ${admin.tag.toUpperCase()} ВЫБРАН!`);
-    }
-
-    showSelectionVortex() {
-        const vortex = document.getElementById('selectionVortex');
-        if (!vortex || !this.selectedAdmin) return;
-
-        vortex.classList.remove('hidden');
-
-        // Update content
-        const holo = document.getElementById('selectedHolo');
-        const name = document.getElementById('selectedName');
-        const rank = document.getElementById('selectedRank');
-        const power = document.getElementById('selectedPower');
-
-        if (holo) holo.textContent = this.selectedAdmin.avatar;
-        if (name) name.textContent = `#${this.selectedAdmin.tag.toUpperCase()}`;
-        if (rank) rank.textContent = this.selectedAdmin.cyber_rank;
-        if (power) power.textContent = `POWER: ${this.selectedAdmin.power_level.toLocaleString()}`;
-    }
-
-    hideSelectionVortex() {
-        const vortex = document.getElementById('selectionVortex');
-        if (vortex) {
-            vortex.classList.add('hidden');
-        }
-    }
-
-    cancelSelection() {
-        if (this.selectedAdmin) {
-            const card = document.querySelector(`[data-admin-id="${this.selectedAdmin.id}"]`);
-            if (card) card.classList.remove('selected');
-        }
-
-        this.selectedAdmin = null;
-        this.hideSelectionVortex();
-
-        console.log("❌ ВЫБОР ОТМЕНЕН");
-    }
-
-    confirmSelection() {
-        if (!this.selectedAdmin) return;
-
-        const admin = this.selectedAdmin;
-
-        // Epic confirmation effects
-        this.createMassiveExplosion();
-        this.createScreenFlash();
-        this.createConfirmationWave();
-
-        console.log(`🎯 ПОДТВЕРЖДЕН ВЫБОР: ${admin.tag.toUpperCase()}`);
-
-        // Send to Telegram
-        if (this.tg) {
-            const data = {
-                type: 'ultra_admin_selected',
-                admin: {
-                    id: admin.id,
-                    tag: admin.tag,
-                    role: admin.role,
-                    power_level: admin.power_level,
-                    cyber_rank: admin.cyber_rank
-                },
-                timestamp: new Date().toISOString()
-            };
-
-            this.tg.sendData(JSON.stringify(data));
-
-            setTimeout(() => {
-                this.tg.close();
-            }, 2000);
-        }
-
-        // Auto-hide after effect
         setTimeout(() => {
-            this.hideSelectionVortex();
-            this.selectedAdmin = null;
-        }, 3000);
+            ripple.remove();
+        }, 600);
     }
 
-    // === SEARCH FUNCTIONALITY ===
-    handleSearch(query) {
-        const lowerQuery = query.toLowerCase();
+    animateStats() {
+        const statNumbers = document.querySelectorAll('.stat-number[data-target]');
 
-        this.filteredAdmins = CYBER_ADMINS.filter(admin => 
-            admin.tag.toLowerCase().includes(lowerQuery) ||
-            admin.role.toLowerCase().includes(lowerQuery) ||
-            admin.cyber_rank.toLowerCase().includes(lowerQuery)
-        );
-
-        this.renderAdmins();
-    }
-
-    // === KEYBOARD HANDLERS ===
-    handleKeyboard(e) {
-        switch(e.key) {
-            case 'Escape':
-                this.cancelSelection();
-                break;
-            case 'Enter':
-                if (this.selectedAdmin) {
-                    this.confirmSelection();
-                }
-                break;
-            case ' ':
-                e.preventDefault();
-                this.createRandomEffects();
-                break;
-        }
-    }
-
-    // === VISUAL EFFECTS ===
-    createRippleEffect(element) {
-        const rect = element.getBoundingClientRect();
-        const ripple = document.createElement('div');
-
-        ripple.style.cssText = `
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            background: rgba(0, 255, 255, 0.6);
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            animation: rippleExpand 0.8s ease-out;
-            pointer-events: none;
-            z-index: 100;
-        `;
-
-        element.style.position = 'relative';
-        element.appendChild(ripple);
-
-        setTimeout(() => ripple.remove(), 800);
-    }
-
-    createParticleExplosion(element) {
-        const rect = element.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        const colors = ['#00ffff', '#ff0080', '#00ff41', '#ffff00', '#8000ff'];
-
-        for (let i = 0; i < 20; i++) {
-            const particle = document.createElement('div');
-            const color = colors[Math.floor(Math.random() * colors.length)];
-
-            particle.style.cssText = `
-                position: fixed;
-                top: ${centerY}px;
-                left: ${centerX}px;
-                width: 6px;
-                height: 6px;
-                background: ${color};
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                box-shadow: 0 0 10px ${color};
-            `;
-
-            const angle = (i / 20) * Math.PI * 2;
-            const velocity = 150 + Math.random() * 100;
-            const dx = Math.cos(angle) * velocity;
-            const dy = Math.sin(angle) * velocity;
-
-            particle.style.setProperty('--dx', dx + 'px');
-            particle.style.setProperty('--dy', dy + 'px');
-
-            document.body.appendChild(particle);
-
-            particle.animate([
-                { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                { transform: `translate(${dx}px, ${dy}px) scale(0)`, opacity: 0 }
-            ], {
-                duration: 1000,
-                easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-            });
-
-            setTimeout(() => particle.remove(), 1000);
-        }
-    }
-
-    createHoverEffect(element) {
-        const sparks = document.createElement('div');
-        sparks.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            background: linear-gradient(45deg, transparent 48%, rgba(0, 255, 255, 0.1) 50%, transparent 52%);
-            animation: sparkSweep 0.5s ease-out;
-        `;
-
-        element.style.position = 'relative';
-        element.appendChild(sparks);
-
-        setTimeout(() => sparks.remove(), 500);
-    }
-
-    createOrbExplosion(orb) {
-        const rect = orb.getBoundingClientRect();
-
-        for (let i = 0; i < 10; i++) {
-            const mini = document.createElement('div');
-            mini.style.cssText = `
-                position: fixed;
-                top: ${rect.top + rect.height/2}px;
-                left: ${rect.left + rect.width/2}px;
-                width: 8px;
-                height: 8px;
-                background: #00ffff;
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                box-shadow: 0 0 15px #00ffff;
-            `;
-
-            const angle = (i / 10) * Math.PI * 2;
-            const dist = 100 + Math.random() * 50;
-            const dx = Math.cos(angle) * dist;
-            const dy = Math.sin(angle) * dist;
-
-            document.body.appendChild(mini);
-
-            mini.animate([
-                { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                { transform: `translate(${dx}px, ${dy}px) scale(0)`, opacity: 0 }
-            ], {
-                duration: 800,
-                easing: 'ease-out'
-            });
-
-            setTimeout(() => mini.remove(), 800);
-        }
-    }
-
-    createScreenShake() {
-        document.body.animate([
-            { transform: 'translate(0, 0)' },
-            { transform: 'translate(-3px, 2px)' },
-            { transform: 'translate(3px, -2px)' },
-            { transform: 'translate(-2px, -3px)' },
-            { transform: 'translate(2px, 3px)' },
-            { transform: 'translate(0, 0)' }
-        ], {
-            duration: 300,
-            easing: 'ease-in-out'
+        statNumbers.forEach((stat, index) => {
+            setTimeout(() => {
+                this.animateNumber(stat, parseFloat(stat.dataset.target));
+            }, index * 300);
         });
     }
 
-    createScreenFlash() {
-        const flash = document.createElement('div');
-        flash.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.4) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 9998;
-            opacity: 0;
-        `;
-
-        document.body.appendChild(flash);
-
-        flash.animate([
-            { opacity: 0 },
-            { opacity: 1 },
-            { opacity: 0 }
-        ], {
-            duration: 200,
-            easing: 'ease-in-out'
-        });
-
-        setTimeout(() => flash.remove(), 200);
-    }
-
-    createMassiveExplosion() {
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-
-        for (let i = 0; i < 50; i++) {
-            const particle = document.createElement('div');
-            const colors = ['#00ffff', '#ff0080', '#00ff41', '#ffff00', '#8000ff', '#ff4000'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-
-            particle.style.cssText = `
-                position: fixed;
-                top: ${centerY}px;
-                left: ${centerX}px;
-                width: ${4 + Math.random() * 8}px;
-                height: ${4 + Math.random() * 8}px;
-                background: ${color};
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                box-shadow: 0 0 20px ${color};
-            `;
-
-            const angle = (i / 50) * Math.PI * 2;
-            const velocity = 200 + Math.random() * 200;
-            const dx = Math.cos(angle) * velocity;
-            const dy = Math.sin(angle) * velocity;
-
-            document.body.appendChild(particle);
-
-            particle.animate([
-                { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                { transform: `translate(${dx}px, ${dy}px) scale(0)`, opacity: 0 }
-            ], {
-                duration: 1500,
-                easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-            });
-
-            setTimeout(() => particle.remove(), 1500);
-        }
-    }
-
-    createConfirmationWave() {
-        const wave = document.createElement('div');
-        wave.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 50px;
-            height: 50px;
-            border: 3px solid #00ff41;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9999;
-            box-shadow: 0 0 30px #00ff41;
-        `;
-
-        document.body.appendChild(wave);
-
-        wave.animate([
-            { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-            { transform: 'translate(-50%, -50%) scale(20)', opacity: 0 }
-        ], {
-            duration: 1000,
-            easing: 'ease-out'
-        });
-
-        setTimeout(() => wave.remove(), 1000);
-    }
-
-    createRandomEffects() {
-        // Random sparkles across screen
-        for (let i = 0; i < 15; i++) {
-            const spark = document.createElement('div');
-            spark.style.cssText = `
-                position: fixed;
-                top: ${Math.random() * window.innerHeight}px;
-                left: ${Math.random() * window.innerWidth}px;
-                width: 4px;
-                height: 4px;
-                background: #ffff00;
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                box-shadow: 0 0 15px #ffff00;
-            `;
-
-            document.body.appendChild(spark);
-
-            spark.animate([
-                { opacity: 0, transform: 'scale(0)' },
-                { opacity: 1, transform: 'scale(1)' },
-                { opacity: 0, transform: 'scale(0)' }
-            ], {
-                duration: 1000,
-                easing: 'ease-in-out'
-            });
-
-            setTimeout(() => spark.remove(), 1000);
-        }
-    }
-
-    // === STATS ANIMATION ===
-    animateStatsCounters() {
-        const totalPower = document.getElementById('totalPower');
-        const cyberNodes = document.getElementById('cyberNodes');
-        const successRate = document.getElementById('successRate');
-
-        if (totalPower) this.animateCounter(totalPower, 37100, 'K');
-        if (cyberNodes) this.animateCounter(cyberNodes, 5);
-        if (successRate) this.animateCounter(successRate, 84.2, '%');
-    }
-
-    animateCounter(element, target, suffix = '') {
-        let current = 0;
-        const increment = target / 100;
+    animateNumber(element, target) {
+        const duration = 2000;
+        const start = 0;
+        const increment = target / (duration / 16);
+        let current = start;
 
         const timer = setInterval(() => {
             current += increment;
@@ -801,68 +194,333 @@ class UltraCyberApp {
                 clearInterval(timer);
             }
 
-            if (suffix === 'K') {
-                element.textContent = (current / 1000).toFixed(1) + 'K';
-            } else if (suffix === '%') {
-                element.textContent = current.toFixed(1) + '%';
-            } else {
+            if (target === Math.floor(target)) {
                 element.textContent = Math.floor(current);
+            } else {
+                element.textContent = current.toFixed(1);
             }
+        }, 16);
+    }
+
+    handleSearch(query) {
+        const searchQuery = query.toLowerCase();
+
+        this.filteredAdmins = this.admins.filter(admin => 
+            admin.tag.toLowerCase().includes(searchQuery) ||
+            admin.role.toLowerCase().includes(searchQuery) ||
+            admin.specialties.some(spec => spec.toLowerCase().includes(searchQuery))
+        );
+
+        this.renderAdmins();
+    }
+
+    renderAdmins() {
+        const container = document.getElementById('adminGrid');
+        if (!container) return;
+
+        if (this.filteredAdmins.length === 0) {
+            container.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+                    <div style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;">🔍</div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 10px;">Администраторы не найдены</h3>
+                    <p style="color: var(--text-secondary);">Попробуйте изменить поисковый запрос</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = this.filteredAdmins.map((admin, index) => 
+            this.createAdminCard(admin, index)
+        ).join('');
+
+        // Анимация появления карточек
+        setTimeout(() => {
+            const cards = container.querySelectorAll('.admin-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
         }, 50);
     }
 
-    // === UTILITY FUNCTIONS ===
-    sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+    createAdminCard(admin, index) {
+        const statusClass = `status-${admin.status}`;
+        const statusText = {
+            'active': 'Активен',
+            'busy': 'Занят',
+            'inactive': 'Не в сети'
+        }[admin.status] || 'Неизвестно';
+
+        const stars = this.generateStars(admin.rating);
+        const specialtyTags = admin.specialties.map(spec => 
+            `<span class="specialty-tag">${spec}</span>`
+        ).join('');
+
+        return `
+            <div class="admin-card" onclick="adminSelector.selectAdmin(${admin.id})" style="opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                <div class="status-badge ${statusClass}">${statusText}</div>
+
+                <div class="card-header">
+                    <div class="admin-avatar">${admin.avatar}</div>
+                    <div class="admin-info">
+                        <h3>#${admin.tag}</h3>
+                        <div class="admin-role">${admin.role}</div>
+                    </div>
+                </div>
+
+                <div class="rating-display">
+                    <div class="stars">${stars}</div>
+                    <span class="rating-number">${admin.rating.toFixed(1)}</span>
+                </div>
+
+                <div class="admin-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">${admin.dialogs}</div>
+                        <div class="stat-label-small">Диалогов</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${admin.resolved}</div>
+                        <div class="stat-label-small">Решено</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${admin.efficiency}%</div>
+                        <div class="stat-label-small">Эффективность</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${admin.response_time}</div>
+                        <div class="stat-label-small">Ответ</div>
+                    </div>
+                </div>
+
+                <div class="specialties">
+                    ${specialtyTags}
+                </div>
+
+                <button class="select-button" onclick="event.stopPropagation(); adminSelector.selectAdmin(${admin.id})">
+                    <i class="fas fa-user-check"></i> Выбрать администратора
+                </button>
+            </div>
+        `;
+    }
+
+    generateStars(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 !== 0;
+        let stars = '';
+
+        for (let i = 0; i < fullStars; i++) {
+            stars += '<i class="fas fa-star star"></i>';
+        }
+
+        if (hasHalfStar) {
+            stars += '<i class="fas fa-star-half-alt star"></i>';
+        }
+
+        for (let i = fullStars + (hasHalfStar ? 1 : 0); i < 5; i++) {
+            stars += '<i class="far fa-star star"></i>';
+        }
+
+        return stars;
+    }
+
+    selectAdmin(adminId) {
+        const admin = this.admins.find(a => a.id === adminId);
+        if (!admin) return;
+
+        this.selectedAdmin = admin;
+
+        // Обновляем визуальное выделение
+        document.querySelectorAll('.admin-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+
+        event.currentTarget.classList.add('selected');
+
+        // Показываем модальное окно
+        this.showModal(admin);
+    }
+
+    showModal(admin) {
+        const modal = document.getElementById('modal');
+        const avatar = document.getElementById('modalAvatar');
+        const title = document.getElementById('modalTitle');
+        const subtitle = document.getElementById('modalSubtitle');
+        const stats = document.getElementById('modalStats');
+
+        avatar.textContent = admin.avatar;
+        title.textContent = `#${admin.tag}`;
+        subtitle.textContent = `${admin.role} • ${admin.experience}`;
+
+        stats.innerHTML = `
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                <div style="text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px;">
+                    <div style="font-size: 2rem; margin-bottom: 8px;">⭐</div>
+                    <div style="font-size: 1.5rem; font-weight: 600; margin-bottom: 5px;">${admin.rating.toFixed(1)}</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Рейтинг</div>
+                </div>
+                <div style="text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px;">
+                    <div style="font-size: 2rem; margin-bottom: 8px;">⚡</div>
+                    <div style="font-size: 1.5rem; font-weight: 600; margin-bottom: 5px;">${admin.efficiency}%</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Эффективность</div>
+                </div>
+                <div style="text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px;">
+                    <div style="font-size: 2rem; margin-bottom: 8px;">💬</div>
+                    <div style="font-size: 1.5rem; font-weight: 600; margin-bottom: 5px;">${admin.dialogs}</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Диалогов</div>
+                </div>
+                <div style="text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px;">
+                    <div style="font-size: 2rem; margin-bottom: 8px;">🕐</div>
+                    <div style="font-size: 1.5rem; font-weight: 600; margin-bottom: 5px;">${admin.response_time}</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Ответ</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px;">
+                <h4 style="margin-bottom: 10px; color: var(--text-primary);">Специализации:</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    ${admin.specialties.map(spec => `
+                        <span style="background: rgba(79,172,254,0.2); color: #4facfe; padding: 6px 12px; border-radius: 15px; font-size: 0.8rem;">
+                            ${spec}
+                        </span>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+
+        modal.classList.add('show');
+    }
+
+    closeModal() {
+        const modal = document.getElementById('modal');
+        modal.classList.remove('show');
+
+        // Убираем выделение
+        document.querySelectorAll('.admin-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+
+        this.selectedAdmin = null;
+    }
+
+    confirmSelection() {
+        if (!this.selectedAdmin) {
+            this.showToast('Администратор не выбран', 'error');
+            return;
+        }
+
+        const confirmBtn = document.getElementById('confirmBtn');
+        const btnText = confirmBtn.querySelector('.btn-text') || confirmBtn;
+        const originalText = btnText.innerHTML;
+
+        // Показываем загрузку
+        btnText.innerHTML = '<span class="loading"></span> Отправка...';
+        confirmBtn.disabled = true;
+
+        // Имитация отправки
+        setTimeout(() => {
+            this.sendToTelegram(this.selectedAdmin);
+
+            btnText.innerHTML = originalText;
+            confirmBtn.disabled = false;
+
+            this.closeModal();
+            this.showToast(`Администратор #${this.selectedAdmin.tag} выбран!`, 'success');
+        }, 1500);
+    }
+
+    sendToTelegram(admin) {
+        if (this.tg) {
+            const data = {
+                type: 'beautiful_admin_selected',
+                admin: {
+                    id: admin.id,
+                    tag: admin.tag,
+                    role: admin.role,
+                    rating: admin.rating,
+                    efficiency: admin.efficiency,
+                    response_time: admin.response_time,
+                    specialties: admin.specialties,
+                    experience: admin.experience
+                },
+                timestamp: new Date().toISOString()
+            };
+
+            console.log('📤 Отправка в Telegram:', data);
+            this.tg.sendData(JSON.stringify(data));
+
+            setTimeout(() => {
+                this.tg.close();
+            }, 2000);
+        } else {
+            console.log('🎮 Тестовый режим - выбран админ:', admin);
+        }
+    }
+
+    showToast(message, type = 'success') {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+
+        toast.className = `toast toast-${type}`;
+        toast.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="font-size: 1.2rem;">
+                    ${type === 'success' ? '✅' : '❌'}
+                </div>
+                <div>
+                    <div style="font-weight: 600; margin-bottom: 2px;">
+                        ${type === 'success' ? 'Успешно!' : 'Ошибка!'}
+                    </div>
+                    <div style="font-size: 0.9rem; color: var(--text-secondary);">
+                        ${message}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 500);
+        }, 3000);
     }
 }
 
-// === ADDITIONAL CSS ANIMATIONS ===
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes rippleExpand {
-        to {
-            transform: translate(-50%, -50%) scale(50);
-            opacity: 0;
-        }
-    }
+// Глобальная переменная для доступа
+let adminSelector;
 
-    @keyframes sparkSweep {
-        from {
-            transform: translateX(-100%);
-        }
-        to {
-            transform: translateX(100%);
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// === INITIALIZE APP ===
-let ultraApp;
-
+// Инициализация при загрузке DOM
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("🌟 ЗАГРУЗКА УЛЬТРА КИБЕР СИСТЕМЫ...");
-    ultraApp = new UltraCyberApp();
+    console.log('🚀 Загрузка красивого селектора...');
+    adminSelector = new BeautifulAdminSelector();
 });
 
-// === ERROR HANDLING ===
-window.addEventListener('error', (e) => {
-    console.error('💥 СИСТЕМНАЯ ОШИБКА:', e.error);
-});
+// Глобальные функции для inline обработчиков
+function closeModal() {
+    adminSelector.closeModal();
+}
 
-// === DEBUG ACCESS ===
+function confirmSelection() {
+    adminSelector.confirmSelection();
+}
+
+// Экспорт для отладки
 if (typeof window !== 'undefined') {
-    window.ultraDebug = {
-        app: () => ultraApp,
-        admins: CYBER_ADMINS,
-        effects: {
-            explosion: (el) => ultraApp?.createParticleExplosion(el || document.body),
-            shake: () => ultraApp?.createScreenShake(),
-            flash: () => ultraApp?.createScreenFlash(),
-            random: () => ultraApp?.createRandomEffects()
-        }
+    window.beautifulAdminSelector = {
+        instance: () => adminSelector,
+        admins: () => adminSelector.admins,
+        showToast: (msg, type) => adminSelector.showToast(msg, type)
     };
 }
 
-console.log("🔥 УЛЬТРА КИБЕР СИСТЕМА ГОТОВА К ЗАПУСКУ!");
+console.log('✨ Красивый селектор администраторов загружен!');

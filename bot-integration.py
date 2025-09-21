@@ -1,310 +1,383 @@
-# 🔥 ULTRA CYBER ADMIN SELECTOR - ИНТЕГРАЦИЯ С БОТОМ
+# ✨ КРАСИВАЯ ИНТЕГРАЦИЯ С БОТОМ
 
 import json
 import asyncio
 from aiogram import Router, F
-from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from aiogram.types import WebAppInfo
 
-# Роутер для админского селектора
-ultra_admin_router = Router()
+# ===== НАСТРОЙКИ КРАСИВОГО СЕЛЕКТОРА =====
 
-# URL вашего ULTRA приложения
-ULTRA_WEBAPP_URL = "https://ваш-username.github.io/ваш-репозиторий/"
+# ✨ ЗАМЕНИТЕ НА ВАШ РЕАЛЬНЫЙ URL
+BEAUTIFUL_WEBAPP_URL = "https://ВАШ-USERNAME.github.io/ВАШ-РЕПОЗИТОРИЙ/"
 
-@ultra_admin_router.message(F.text == "/webapp")
-async def show_ultra_webapp(message: Message):
-    """Показать ULTRA CYBER ADMIN SELECTOR"""
+# ID администраторов
+ADMIN_IDS = {
+    5518423575: "roman",
+    123456789: "мукра_адская", 
+    987654321: "support",
+    555666777: "moderator_1",
+    444333222: "helper"
+}
 
-    # Создаем кнопку с WebApp
+@dp.message(F.text == "/webapp")
+async def show_beautiful_webapp(message: Message):
+    """✨ Запустить красивый селектор администраторов"""
+
+    user_id = message.from_user.id
+
+    # Проверяем активные диалоги
+    active_dialog = get_active_dialog_by_user(user_id)
+    if active_dialog:
+        admin_info = get_admin_by_id(active_dialog['admin_id'])
+        admin_tag = admin_info['tag'] if admin_info else "неизвестен"
+
+        await message.answer(
+            f"⚠️ У вас уже есть активный диалог с администратором #{admin_tag}\n"
+            f"Завершите текущий диалог перед выбором нового.\n\n"
+            f"Используйте /end чтобы завершить диалог."
+        )
+        return
+
+    # Создаем кнопку с красивым WebApp
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text="🚀 ЗАПУСТИТЬ CYBER MATRIX",
-                    web_app=WebAppInfo(url=ULTRA_WEBAPP_URL)
+                    text="✨ Открыть Селектор ✨",
+                    web_app=WebAppInfo(url=BEAUTIFUL_WEBAPP_URL)
                 )
             ],
             [
                 InlineKeyboardButton(
-                    text="📊 Статистика админов",
-                    callback_data="admin_stats"
+                    text="📊 Статистика системы",
+                    callback_data="beautiful_stats"
+                ),
+                InlineKeyboardButton(
+                    text="💡 Как это работает",
+                    callback_data="beautiful_help"
                 )
             ]
         ]
     )
 
-    ultra_message = """
-🔥 **ULTRA CYBER ADMIN SELECTOR** 🔥
+    beautiful_message = """
+✨ **Селектор Администраторов Premium** ✨
 
-🚀 Запустите самый КРУТОЙ селектор администраторов!
+🎨 Откройте красивый интерфейс выбора администраторов с потрясающими анимациями!
 
-✨ **Что вас ждет:**
-• Matrix Rain фон
-• Particle эффекты  
-• Holographic UI
-• Cyber статистика
-• Боевые характеристики админов
+🌟 **Что вас ждет:**
+• Glassmorphism дизайн с blur эффектами
+• Плавающие анимации и градиенты
+• Интерактивные карточки администраторов
+• Детальная статистика каждого админа
+• Responsive дизайн для всех устройств
 
-⚡ **Система рангов:**
-👑 LEGEND (9500+ power)
-🛡️ ELITE (8000+ power)  
-⚖️ EXPERT (7000+ power)
-🎧 PRO (6000+ power)
-🤝 ADVANCED (5000+ power)
+👥 **Наша команда экспертов:**
+👑 **Владелец** - VIP поддержка, критические вопросы
+🛡️ **Администратор** - Модерация и конфликты  
+⚖️ **Модератор** - Жалобы и спам
+🎧 **Техподдержка** - Технические проблемы
+🤝 **Помощник** - Базовые вопросы новичков
 
-🎮 Готовы к НЕВЕРОЯТНОМУ опыту?
+⚡ **Средняя эффективность:** 84.2%
+⭐ **Средний рейтинг:** 4.5/5.0
+🕐 **Среднее время ответа:** 6 минут
+
+🎯 Нажмите "Открыть Селектор" для невероятного опыта!
     """
 
     await message.answer(
-        ultra_message,
+        beautiful_message,
         reply_markup=keyboard,
         parse_mode="Markdown"
     )
 
-@ultra_admin_router.message(F.web_app_data)
-async def handle_ultra_selection(message: Message):
-    """Обработка выбора администратора из ULTRA селектора"""
+@dp.message(F.web_app_data)
+async def handle_beautiful_admin_selection(message: Message):
+    """🎨 Обработка выбора из красивого селектора"""
 
     try:
-        # Парсим данные из WebApp
         data = json.loads(message.web_app_data.data)
 
-        if data.get('type') == 'ultra_admin_selected':
-            admin = data['admin']
+        if data.get('type') == 'beautiful_admin_selected':
+            admin_data = data['admin']
+            user_id = message.from_user.id
 
-            # Создаем ЭПИЧЕСКИЙ ответ
+            # Проверяем активные диалоги
+            active_dialog = get_active_dialog_by_user(user_id)
+            if active_dialog:
+                await message.answer(
+                    "⚠️ У вас уже есть активный диалог!\n"
+                    "Завершите его командой /end"
+                )
+                return
+
+            admin_id = admin_data['id']
+            admin_info = get_admin_by_id(admin_id)
+
+            if not admin_info:
+                await message.answer(
+                    f"❌ Администратор #{admin_data['tag']} не найден в системе!"
+                )
+                return
+
+            # Проверяем доступность
+            admin_dialogs = get_dialogs_by_admin(admin_id)
+            active_count = len([d for d in admin_dialogs if d['status'] == 'active'])
+
+            if active_count >= 3:
+                await message.answer(
+                    f"😔 Администратор #{admin_info['tag']} сейчас занят\n"
+                    f"(активных диалогов: {active_count}/3)\n\n"
+                    f"Попробуйте выбрать другого или повторите позже."
+                )
+                return
+
+            # Создаем диалог
+            dialog_id = create_dialog(user_id, admin_id)
+
+            if not dialog_id:
+                await message.answer("❌ Ошибка создания диалога")
+                return
+
+            # Красивый ответ пользователю
+            specialties_text = "\n".join([f"• {spec}" for spec in admin_data.get('specialties', [])])
+
             response = f"""
-⚡ **АДМИНИСТРАТОР АКТИВИРОВАН!** ⚡
+✨ **Администратор успешно выбран!** ✨
 
-🎯 **Выбран:** #{admin['tag'].upper()}
-👤 **Роль:** {admin['role']}
-🏆 **Кибер-ранг:** {admin['cyber_rank']}
-💪 **Уровень мощности:** {admin['power_level']:,}
+👤 **Выбран:** #{admin_info['tag']}
+🏷️ **Роль:** {admin_info['role']}
+📈 **Опыт:** {admin_data.get('experience', 'Неизвестно')}
+⭐ **Рейтинг:** {admin_data['rating']:.1f}/5.0
+⚡ **Эффективность:** {admin_data['efficiency']}%
+🕐 **Время ответа:** ~{admin_data['response_time']}
+🆔 **Диалог:** `{dialog_id}`
 
-🔥 **СИСТЕМА ГОТОВА К РАБОТЕ!** 🔥
+🎯 **Специализации:**
+{specialties_text}
 
-Администратор #{admin['tag']} был уведомлен о вашем запросе
-и скоро свяжется с вами.
+💬 Администратор уведомлен о вашем запросе и скоро свяжется с вами.
 
-⏱️ Ожидаемое время ответа: 2-5 минут
+🔚 Команда /end завершит диалог
             """
 
-            # Создаем кнопки для дальнейших действий
             keyboard = InlineKeyboardMarkup(
                 inline_keyboard=[
                     [
                         InlineKeyboardButton(
-                            text="🔄 Выбрать другого админа",
-                            web_app=WebAppInfo(url=ULTRA_WEBAPP_URL)
+                            text="✨ Выбрать другого",
+                            web_app=WebAppInfo(url=BEAUTIFUL_WEBAPP_URL)
                         )
                     ],
                     [
                         InlineKeyboardButton(
-                            text="📈 Статистика выбранного",
-                            callback_data=f"admin_profile_{admin['id']}"
-                        )
-                    ],
-                    [
+                            text="📊 Профиль админа",
+                            callback_data=f"beautiful_profile_{admin_id}"
+                        ),
                         InlineKeyboardButton(
-                            text="❌ Отменить запрос",
-                            callback_data="cancel_request"
+                            text="❌ Завершить диалог",
+                            callback_data=f"end_dialog_{dialog_id}"
                         )
                     ]
                 ]
             )
 
-            await message.answer(
-                response,
-                reply_markup=keyboard,
-                parse_mode="Markdown"
-            )
+            await message.answer(response, reply_markup=keyboard, parse_mode="Markdown")
 
-            # ЗДЕСЬ ВЫ МОЖЕТЕ ДОБАВИТЬ ЛОГИКУ:
-            # - Уведомление выбранного администратора
-            # - Создание тикета в системе
-            # - Логирование статистики
-            # - Отправка в группу админов
-
-            # Пример уведомления админа
-            await notify_selected_admin(admin, message.from_user)
-
-            # Пример логирования
-            await log_admin_selection(admin, message.from_user, data['timestamp'])
+            # Уведомляем админа
+            await notify_admin_beautiful(admin_id, admin_info, message.from_user, dialog_id, admin_data)
 
     except Exception as e:
-        await message.answer(
-            "❌ Ошибка обработки данных из ULTRA селектора. "
-            "Попробуйте еще раз или обратитесь к технической поддержке."
-        )
-        print(f"Error handling ultra webapp data: {e}")
+        await message.answer("❌ Ошибка обработки данных из селектора")
+        print(f"Error: {e}")
 
-async def notify_selected_admin(admin, user):
-    """Уведомить выбранного администратора"""
+async def notify_admin_beautiful(admin_id, admin_info, user, dialog_id, admin_data):
+    """✨ Красивое уведомление администратора"""
+
     try:
+        user_name = user.first_name
+        if user.last_name:
+            user_name += f" {user.last_name}"
+        if user.username:
+            user_name += f" (@{user.username})"
+
+        specialties_text = ", ".join(admin_data.get('specialties', []))
+
         notification = f"""
-🔔 **НОВЫЙ ЗАПРОС ЧЕРЕЗ ULTRA SELECTOR!**
+✨ **Вы выбраны через Premium Селектор!** ✨
 
-👤 **От пользователя:** @{user.username or user.first_name}
-🆔 **User ID:** {user.id}
-⚡ **Вы были выбраны** через CYBER MATRIX
+🎯 **Пользователь выбрал именно ВАС** из всех администраторов!
 
-🎯 **Ваш ранг:** {admin['cyber_rank']}
-💪 **Power Level:** {admin['power_level']:,}
+👤 **Пользователь:** {user_name}
+🆔 **ID:** `{user.id}`
+🎮 **Диалог:** `{dialog_id}`
 
-Пожалуйста, свяжитесь с пользователем в ближайшее время.
+🏆 **Ваш профиль:**
+👨‍💼 **Роль:** {admin_info['role']}
+⭐ **Рейтинг:** {admin_data['rating']:.1f}/5.0
+⚡ **Эффективность:** {admin_data['efficiency']}%
+🎯 **Специализации:** {specialties_text}
+
+💡 Пользователь выбрал вас на основе:
+• Высокого рейтинга и эффективности
+• Подходящих специализаций
+• Быстрого времени ответа
+
+💬 **Отвечайте на это сообщение** для связи с пользователем
+🔚 **Команда /end** завершит диалог
+
+🌟 Покажите высокое качество обслуживания!
         """
 
-        # Отправляем админу (замените на реальный ID)
-        admin_id = admin['id']
-        # await bot.send_message(admin_id, notification, parse_mode="Markdown")
+        keyboard = InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton(
+                        text="👤 Профиль пользователя",
+                        callback_data=f"user_profile_{user.id}"
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="📊 Мои статистики",
+                        callback_data="beautiful_my_stats"
+                    ),
+                    InlineKeyboardButton(
+                        text="❌ Завершить диалог",
+                        callback_data=f"end_dialog_{dialog_id}"
+                    )
+                ]
+            ]
+        )
+
+        await bot.send_message(
+            admin_id,
+            notification,
+            reply_markup=keyboard,
+            parse_mode="Markdown"
+        )
 
     except Exception as e:
-        print(f"Error notifying admin: {e}")
+        print(f"Error notifying admin {admin_id}: {e}")
 
-async def log_admin_selection(admin, user, timestamp):
-    """Логирование выбора администратора"""
-    log_data = {
-        'timestamp': timestamp,
-        'user_id': user.id,
-        'username': user.username,
-        'selected_admin': {
-            'id': admin['id'],
-            'tag': admin['tag'],
-            'rank': admin['cyber_rank'],
-            'power': admin['power_level']
-        },
-        'source': 'ultra_cyber_selector'
-    }
+@dp.callback_query(F.data == "beautiful_stats")
+async def show_beautiful_stats(callback: CallbackQuery):
+    """📊 Красивая статистика системы"""
 
-    # Сохраните в базу данных или файл
-    print(f"ULTRA Selection logged: {log_data}")
+    admins_list = get_admins_list()
+    total_dialogs = len(get_all_dialogs())
+    active_dialogs = len([d for d in get_all_dialogs() if d['status'] == 'active'])
 
-@ultra_admin_router.callback_query(F.data == "admin_stats")
-async def show_admin_stats(callback):
-    """Показать общую статистику админов"""
+    # Вычисляем статистику
+    active_admins = len([a for a in admins_list if a.get('status', 'active') == 'active'])
+    avg_rating = sum([4.5, 5.0, 4.8, 4.6, 4.2, 4.1]) / 6  # Примерные рейтинги
+    success_rate = 84.2
 
-    stats_message = """
-📊 **СТАТИСТИКА CYBER MATRIX**
+    stats_text = f"""
+📊 **Premium Dashboard - Статистика**
 
-🔋 **Общая мощность:** 37,100 POWER
-🌐 **Активных узлов:** 3/5
-📈 **Коэффициент успеха:** 84.2%
+✨ **Общие показатели системы:**
+┌─ 👥 Администраторов: {len(admins_list)}
+├─ 🟢 Активных сейчас: {active_admins}
+├─ 💬 Всего диалогов: {total_dialogs}
+├─ 🔥 Активных диалогов: {active_dialogs}
+├─ ⭐ Средний рейтинг: {avg_rating:.1f}/5.0
+├─ 📈 Успешность: {success_rate}%
+└─ 🕐 Среднее время ответа: 6 мин
+
+🏆 **Рейтинг администраторов:**
+👑 **roman** - 5.0⭐ (95% эффективность)
+🛡️ **мукра_адская** - 4.8⭐ (89% эффективность) 
+⚖️ **moderator_1** - 4.6⭐ (82% эффективность)
+🎧 **support** - 4.2⭐ (76% эффективность)
+🤝 **helper** - 4.1⭐ (71% эффективность)
+
 ⚡ **Статус системы:** ОПТИМАЛЬНЫЙ
+🌟 **Качество обслуживания:** ВЫСОКОЕ
+🎯 **Удовлетворенность пользователей:** 96%
 
-👥 **Админы по рангам:**
-👑 LEGEND: 1 админ (9,500 power)
-🛡️ ELITE: 1 админ (8,200 power)  
-⚖️ EXPERT: 1 админ (7,400 power)
-🎧 PRO: 1 админ (6,700 power)
-🤝 ADVANCED: 1 админ (5,300 power)
-
-📈 **За последние 24 часа:**
-• Обработано диалогов: 156
-• Решено проблем: 142
-• Средний рейтинг: 4.54/5.0
-• Время ответа: 6 мин
-
-🎯 Система работает в ОПТИМАЛЬНОМ режиме!
+🔮 Система работает в премиум режиме!
     """
 
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text="🚀 Запустить ULTRA Selector",
-                    web_app=WebAppInfo(url=ULTRA_WEBAPP_URL)
-                )
-            ]
-        ]
-    )
-
-    await callback.message.edit_text(
-        stats_message,
-        reply_markup=keyboard,
-        parse_mode="Markdown"
-    )
-
-@ultra_admin_router.callback_query(F.data.startswith("admin_profile_"))
-async def show_admin_profile(callback):
-    """Показать профиль конкретного администратора"""
-
-    admin_id = int(callback.data.split("_")[2])
-
-    # Здесь должна быть логика получения данных админа
-    # Для примера используем заглушку
-
-    profile_message = """
-👤 **ПРОФИЛЬ АДМИНИСТРАТОРА**
-
-🏷️ **Тег:** #ROMAN
-👑 **Ранг:** LEGEND
-💪 **Power Level:** 9,500
-
-⚔️ **Боевые характеристики:**
-• Атака: 95/100
-• Защита: 88/100  
-• Скорость: 92/100
-• Интеллект: 96/100
-
-📊 **Статистика:**
-• Диалогов: 156
-• Решено: 148 (94.8%)
-• Рейтинг: ⭐⭐⭐⭐⭐ (5.0)
-• Время ответа: 2 мин
-
-🏆 **Достижения:**
-• Ultimate Admin 2025
-• Lightning Response Master
-• Customer Satisfaction God
-
-🎯 Этот админ - настоящая ЛЕГЕНДА!
-    """
-
-    keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(
-                    text="🔄 Выбрать другого",
-                    web_app=WebAppInfo(url=ULTRA_WEBAPP_URL)
+                    text="✨ Открыть Селектор",
+                    web_app=WebAppInfo(url=BEAUTIFUL_WEBAPP_URL)
                 )
             ],
             [
                 InlineKeyboardButton(
-                    text="◀️ Назад к статистике", 
-                    callback_data="admin_stats"
+                    text="📈 Детальная статистика",
+                    callback_data="beautiful_detailed_stats"
                 )
             ]
         ]
     )
 
     await callback.message.edit_text(
-        profile_message,
+        stats_text,
         reply_markup=keyboard,
         parse_mode="Markdown"
     )
 
-@ultra_admin_router.callback_query(F.data == "cancel_request")
-async def cancel_request(callback):
-    """Отменить запрос к администратору"""
+@dp.callback_query(F.data == "beautiful_help")
+async def show_beautiful_help(callback: CallbackQuery):
+    """💡 Помощь по красивому селектору"""
+
+    help_text = """
+💡 **Premium Селектор - Руководство**
+
+✨ **Как пользоваться:**
+1️⃣ Нажмите "Открыть Селектор" 
+2️⃣ Дождитесь загрузки красивого интерфейса
+3️⃣ Изучите карточки администраторов
+4️⃣ Используйте поиск по специализациям
+5️⃣ Кликните на нужного администратора
+6️⃣ Подтвердите выбор в модальном окне
+7️⃣ Начинайте общение!
+
+🎨 **Особенности интерфейса:**
+• **Glassmorphism** дизайн с blur эффектами
+• **Плавающие анимации** и градиенты
+• **Интерактивные карточки** с hover эффектами
+• **Адаптивный дизайн** для всех устройств
+• **Поиск в реальном времени**
+
+👥 **Выбор администратора:**
+🔍 **Поиск** - Найдите админа по специализации
+⭐ **Рейтинг** - Показывает качество работы
+⚡ **Эффективность** - Процент решенных вопросов
+🕐 **Время ответа** - Как быстро отвечает
+🎯 **Специализации** - В чем специализируется
+
+🎭 **Интерактивные элементы:**
+• Наведите на карточку для анимации
+• Кликните для создания ripple эффекта
+• Используйте поиск для фильтрации
+• Просматривайте детали в модальном окне
+
+❓ **Проблемы?** Обращайтесь к /support
+    """
+
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text="✨ Попробовать сейчас",
+                    web_app=WebAppInfo(url=BEAUTIFUL_WEBAPP_URL)
+                )
+            ]
+        ]
+    )
 
     await callback.message.edit_text(
-        "❌ **Запрос отменен**
-
-"
-        "Вы можете выбрать администратора заново в любое время.",
-        reply_markup=InlineKeyboardMarkup(
-            inline_keyboard=[
-                [
-                    InlineKeyboardButton(
-                        text="🚀 Запустить ULTRA Selector",
-                        web_app=WebAppInfo(url=ULTRA_WEBAPP_URL)
-                    )
-                ]
-            ]
-        ),
+        help_text,
+        reply_markup=keyboard,
         parse_mode="Markdown"
     )
 
-# Экспорт роутера для подключения к основному боту
-__all__ = ['ultra_admin_router']
+print("✨ Красивая интеграция с ботом создана!")
