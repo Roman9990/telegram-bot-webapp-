@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 ULTRA CYBER ADMIN SELECTOR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@100;400;700;900&family=Exo+2:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* CUSTOM CURSOR TRAIL */
+        body { cursor: none; }
+        .cursor { 
+            position: fixed; 
+            width: 20px; 
+            height: 20px; 
+            background: #00ffff; 
+            border-radius: 50%; 
+            pointer-events: none; 
+            z-index: 10000; 
+            mix-blend-mode: difference;
+            animation: cursorPulse 1s infinite;
+        }
+        @keyframes cursorPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.5); opacity: 1; }
+        }
+        .cursor-trail { 
+            position: fixed; 
+            width: 4px; 
+            height: 4px; 
+            background: #ff0080; 
+            border-radius: 50%; 
+            pointer-events: none; 
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- MATRIX RAIN CANVAS -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- FLOATING ORBS -->
+    <div class="floating-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+        <div class="orb orb-5"></div>
+    </div>
+
+    <!-- LOADING PORTAL -->
+    <div class="loading-portal" id="loadingPortal">
+        <div class="portal-rings">
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+            <div class="ring ring-3"></div>
+        </div>
+        <div class="loading-core">
+            <div class="core-text">ИНИЦИАЛИЗАЦИЯ</div>
+            <div class="core-subtext">CYBER MATRIX</div>
+            <div class="progress-ring">
+                <svg width="120" height="120">
+                    <circle cx="60" cy="60" r="50" class="progress-bg"/>
+                    <circle cx="60" cy="60" r="50" class="progress-fill"/>
+                </svg>
+            </div>
+        </div>
+        <div class="loading-status">ЗАГРУЗКА АДМИНИСТРАТИВНОЙ МАТРИЦЫ...</div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div class="cyber-app" id="cyberApp">
+        <!-- MEGA HEADER -->
+        <header class="mega-header">
+            <div class="header-bg"></div>
+            <div class="hologram-title">
+                <h1 class="ultra-title">
+                    <span class="title-part">CYBER</span>
+                    <span class="title-part glow">ADMIN</span>
+                    <span class="title-part pulse">MATRIX</span>
+                </h1>
+                <div class="title-underline"></div>
+                <p class="subtitle">УЛЬТРА СИСТЕМА ВЫБОРА АДМИНИСТРАТОРОВ</p>
+            </div>
+
+            <!-- FLOATING STATS -->
+            <div class="stats-matrix">
+                <div class="stat-orb" data-label="МОЩНОСТЬ" data-value="37100">
+                    <div class="orb-core"></div>
+                    <div class="orb-value">37.1K</div>
+                    <div class="orb-label">POWER</div>
+                </div>
+                <div class="stat-orb" data-label="УЗЛЫ" data-value="5">
+                    <div class="orb-core"></div>
+                    <div class="orb-value">5</div>
+                    <div class="orb-label">NODES</div>
+                </div>
+                <div class="stat-orb" data-label="УСПЕХ" data-value="84">
+                    <div class="orb-core"></div>
+                    <div class="orb-value">84%</div>
+                    <div class="orb-label">SUCCESS</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- LIQUID SEARCH -->
+        <div class="search-zone">
+            <div class="search-portal">
+                <div class="portal-energy"></div>
+                <input type="text" class="cyber-search" id="searchInput" placeholder=">>> СКАНИРОВАТЬ МАТРИЦУ <<<">
+                <div class="search-waves"></div>
+            </div>
+        </div>
+
+        <!-- ADMIN MATRIX GRID -->
+        <main class="matrix-grid" id="matrixGrid">
+            <!-- Cards will be generated here -->
+        </main>
+
+        <!-- SELECTION VORTEX -->
+        <div class="selection-vortex hidden" id="selectionVortex">
+            <div class="vortex-rings">
+                <div class="vortex-ring"></div>
+                <div class="vortex-ring"></div>
+                <div class="vortex-ring"></div>
+            </div>
+            <div class="selection-panel">
+                <div class="selected-admin">
+                    <div class="admin-hologram" id="selectedHolo">👤</div>
+                    <div class="admin-details">
+                        <div class="admin-name" id="selectedName">АДМИН НЕ ВЫБРАН</div>
+                        <div class="admin-rank" id="selectedRank">UNDEFINED</div>
+                        <div class="admin-power" id="selectedPower">POWER: 0</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="cyber-btn cancel" id="cancelBtn">
+                        <span class="btn-text">ОТМЕНА</span>
+                        <div class="btn-energy"></div>
+                    </button>
+                    <button class="cyber-btn confirm" id="confirmBtn">
+                        <span class="btn-text">АКТИВИРОВАТЬ</span>
+                        <div class="btn-energy"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="ultra-app.js"></script>
+</body>
+</html>

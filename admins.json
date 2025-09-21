@@ -1,0 +1,270 @@
+{
+  "admins": [
+    {
+      "id": 5518423575,
+      "tag": "roman",
+      "role": "Владелец",
+      "status": "active",
+      "avatar": "👑",
+      "rating": 5.0,
+      "efficiency": 95,
+      "dialogs": 156,
+      "resolved": 148,
+      "response_time": "2 мин",
+      "last_seen": "2025-09-21T22:05:00",
+      "badges": [
+        "legend",
+        "top_admin",
+        "veteran",
+        "problem_solver"
+      ],
+      "performance": {
+        "satisfaction": 98,
+        "speed": 92,
+        "quality": 96,
+        "consistency": 94
+      },
+      "specialties": [
+        "VIP поддержка",
+        "Техническая помощь",
+        "Эскалации",
+        "Критические вопросы"
+      ],
+      "languages": [
+        "ru",
+        "en"
+      ],
+      "workload": "low",
+      "power_level": 9500,
+      "cyber_rank": "LEGEND",
+      "achievements": [
+        "🏆 Ultimate Admin 2025",
+        "⚡ Lightning Response Master",
+        "🌟 Customer Satisfaction God",
+        "🔥 Problem Solving Genius"
+      ],
+      "combat_stats": {
+        "attack": 95,
+        "defense": 88,
+        "speed": 92,
+        "intelligence": 96
+      }
+    },
+    {
+      "id": 123456789,
+      "tag": "мукра_адская",
+      "role": "Администратор",
+      "status": "active",
+      "avatar": "🛡️",
+      "rating": 4.8,
+      "efficiency": 89,
+      "dialogs": 234,
+      "resolved": 198,
+      "response_time": "3 мин",
+      "last_seen": "2025-09-21T21:30:00",
+      "badges": [
+        "elite",
+        "rising_star",
+        "fast_responder",
+        "demon_slayer"
+      ],
+      "performance": {
+        "satisfaction": 94,
+        "speed": 88,
+        "quality": 91,
+        "consistency": 87
+      },
+      "specialties": [
+        "Модерация",
+        "Конфликты",
+        "Правила",
+        "Баны"
+      ],
+      "languages": [
+        "ru"
+      ],
+      "workload": "medium",
+      "power_level": 8200,
+      "cyber_rank": "ELITE",
+      "achievements": [
+        "🚀 Rising Star 2025",
+        "⚔️ Conflict Resolution Expert",
+        "📋 Rule Enforcement Master"
+      ],
+      "combat_stats": {
+        "attack": 89,
+        "defense": 92,
+        "speed": 85,
+        "intelligence": 88
+      }
+    },
+    {
+      "id": 987654321,
+      "tag": "support",
+      "role": "Техподдержка",
+      "status": "inactive",
+      "avatar": "🎧",
+      "rating": 4.2,
+      "efficiency": 76,
+      "dialogs": 89,
+      "resolved": 67,
+      "response_time": "8 мин",
+      "last_seen": "2025-09-20T15:20:00",
+      "badges": [
+        "pro",
+        "helpful",
+        "tech_expert"
+      ],
+      "performance": {
+        "satisfaction": 85,
+        "speed": 72,
+        "quality": 88,
+        "consistency": 79
+      },
+      "specialties": [
+        "Техподдержка",
+        "FAQ",
+        "Баги",
+        "Инструкции"
+      ],
+      "languages": [
+        "ru",
+        "en"
+      ],
+      "workload": "high",
+      "power_level": 6700,
+      "cyber_rank": "PRO",
+      "achievements": [
+        "🤝 Helpful Community Member",
+        "📚 Technical FAQ Master",
+        "🔧 Bug Hunter"
+      ],
+      "combat_stats": {
+        "attack": 67,
+        "defense": 75,
+        "speed": 72,
+        "intelligence": 85
+      }
+    },
+    {
+      "id": 555666777,
+      "tag": "moderator_1",
+      "role": "Модератор",
+      "status": "active",
+      "avatar": "⚖️",
+      "rating": 4.6,
+      "efficiency": 82,
+      "dialogs": 145,
+      "resolved": 119,
+      "response_time": "5 мин",
+      "last_seen": "2025-09-21T20:45:00",
+      "badges": [
+        "expert",
+        "fair_judge",
+        "community_guardian"
+      ],
+      "performance": {
+        "satisfaction": 89,
+        "speed": 79,
+        "quality": 93,
+        "consistency": 84
+      },
+      "specialties": [
+        "Модерация чатов",
+        "Жалобы",
+        "Спам",
+        "Нарушения"
+      ],
+      "languages": [
+        "ru"
+      ],
+      "workload": "medium",
+      "power_level": 7400,
+      "cyber_rank": "EXPERT",
+      "achievements": [
+        "⚖️ Fair Judge Award",
+        "🛡️ Community Guardian",
+        "⭐ Consistency Master"
+      ],
+      "combat_stats": {
+        "attack": 74,
+        "defense": 86,
+        "speed": 79,
+        "intelligence": 91
+      }
+    },
+    {
+      "id": 444333222,
+      "tag": "helper",
+      "role": "Помощник",
+      "status": "busy",
+      "avatar": "🤝",
+      "rating": 4.1,
+      "efficiency": 71,
+      "dialogs": 67,
+      "resolved": 48,
+      "response_time": "12 мин",
+      "last_seen": "2025-09-19T10:15:00",
+      "badges": [
+        "advanced",
+        "newbie",
+        "promising"
+      ],
+      "performance": {
+        "satisfaction": 81,
+        "speed": 65,
+        "quality": 84,
+        "consistency": 73
+      },
+      "specialties": [
+        "Новички",
+        "Базовые вопросы",
+        "Первичная помощь"
+      ],
+      "languages": [
+        "ru"
+      ],
+      "workload": "high",
+      "power_level": 5300,
+      "cyber_rank": "ADVANCED",
+      "achievements": [
+        "🌱 Promising Newcomer",
+        "💪 Growth Potential",
+        "🎯 Learning Fast"
+      ],
+      "combat_stats": {
+        "attack": 53,
+        "defense": 61,
+        "speed": 65,
+        "intelligence": 78
+      }
+    }
+  ],
+  "matrix_stats": {
+    "total_power": 37100,
+    "cyber_nodes": 5,
+    "active_connections": 3,
+    "data_streams": 691,
+    "success_rate": 84.2,
+    "threat_level": "MINIMAL",
+    "system_status": "OPTIMAL",
+    "last_update": "2025-09-21T22:41:00Z"
+  },
+  "system_info": {
+    "version": "3.0.0-ULTRA",
+    "codename": "CYBER_MATRIX",
+    "build_date": "2025-09-21",
+    "features": [
+      "Matrix Rain Background",
+      "Particle Explosion Effects",
+      "Custom Cursor Trail",
+      "Screen Shake & Flash",
+      "Holographic UI Elements",
+      "Advanced Animation System",
+      "Telegram WebApp Integration",
+      "Voice Command Ready",
+      "AR/VR Compatible",
+      "Neural Network Enhanced"
+    ]
+  }
+}
